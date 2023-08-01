@@ -13,4 +13,4 @@ Feature: Search Git For User
     And the profile's is followed by "<personal_following>"
     Examples:
       | profile | follower_no | following_no | repo_no | gist_no | location | job | website | personal_following |
-      | Smith   |     229     | 192          | 229     | 94      | location | job | website | personal_following |
+      | Smith   |     119     | 192          | 229     | 94      | location | job | website | personal_following |

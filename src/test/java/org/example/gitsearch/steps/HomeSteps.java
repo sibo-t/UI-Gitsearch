@@ -1,6 +1,6 @@
 package org.example.gitsearch.steps;
 
-import io.cucumber.java.en.And;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -18,6 +18,8 @@ public class HomeSteps {
     public HomeSteps() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--no-sandbox");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://gh-users-search.netlify.app/");
@@ -27,11 +29,13 @@ public class HomeSteps {
     @When("the user searchs the profile {string}")
     public void aUsersSalaryFrequency(String profile) {
         homePage.searchName(profile);
+        homePage.clickSearchButton();
     }
 
     @Then("the profile's follower are this many {string}")
     public void theProfileSFollowerAreThisMany(String follows) {
-        assertTrue(homePage.isTheNumberOfFollowersEqualTO(follows));
+        boolean isItFound = homePage.isTheNumberOfFollowersEqualTO(follows);
+        assertTrue(isItFound);
     }
 
     @Then("the profile's followings are this many {string}")
@@ -64,5 +68,10 @@ public class HomeSteps {
 
     @Then("the profile's is followed by {string}")
     public void theProfileSIsFollowedBy(String arg0) {
+    }
+
+    @After
+    public void quitDriver() {
+        driver.quit();
     }
 }
